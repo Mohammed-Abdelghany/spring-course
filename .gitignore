@@ -1,0 +1,32 @@
+# Eclipse files
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Maven target directory
+target/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Spring Boot specific
+*.jar
+*.war
+
+# VS Code workspace (لو فتحته بـ VS Code)
+.vscode/
