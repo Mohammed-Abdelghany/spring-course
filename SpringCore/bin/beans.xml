@@ -7,18 +7,20 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
     
-       <bean id="PersonService" class="com.spring.core.PersonService">
+<!--        <bean id="PersonService" class="com.spring.core.task1.PersonService">
       </bean>
-      
-      
-  	<bean id="MangerService" class="com.spring.core.MangerService">
+  	<bean id="MangerService" class="com.spring.core.task1.MangerService">
       </bean>
-      
-	<bean id="UserService" class="com.spring.core.UserService">
-
+	<bean id="UserService" class="com.spring.core.task1.UserService">
       </bean>
+ -->      
     
-    
-    
-    
+       	<bean id="AccountServiceImpl" class="com.spring.core.task2.AccountServiceImpl">
+       	<property name="PersonService" ref="PersonService"></property>
+      </bean>
+         <bean id="PersonService" class="com.spring.core.task2.PersonService">
+      </bean>
+     
+     
+      
 </beans>

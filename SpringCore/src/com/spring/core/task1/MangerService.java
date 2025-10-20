@@ -1,4 +1,4 @@
-package com.spring.core;
+package com.spring.core.task1;
 
 public class MangerService implements UserService  {
 private String name;

@@ -1,4 +1,4 @@
-package com.spring.core;
+package com.spring.core.task1;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
