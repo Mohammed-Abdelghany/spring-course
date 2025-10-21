@@ -15,12 +15,17 @@
       </bean>
  -->      
     
-       	<bean id="AccountServiceImpl" class="com.spring.core.task2.AccountServiceImpl">
+    <!--    	<bean id="AccountServiceImpl" class="com.spring.core.task2.AccountServiceImpl">
        	<property name="PersonService" ref="PersonService"></property>
       </bean>
          <bean id="PersonService" class="com.spring.core.task2.PersonService">
       </bean>
-     
+      -->
+<bean id="PersonService"
+      class="com.spring.core.task3.PersonService"
+      scope="prototype"
+      init-method="init"
+      destroy-method="destroy" />      
      
       
 </beans>
