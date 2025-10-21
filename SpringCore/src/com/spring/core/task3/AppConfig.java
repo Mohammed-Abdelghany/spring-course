@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class AppConfig {
-	@Scope("singleton")
+	@Scope("prototype")//or singleton for print destroy-method
     @Bean
     public UserService personService() {
         return new PersonService();
