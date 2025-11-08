@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Teacher {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,5 +22,7 @@ public class Teacher {
     private String password;
     @Column(unique = true, nullable = false)
     private String phoneNumber;
+
+
 
 }
