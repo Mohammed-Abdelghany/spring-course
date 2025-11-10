@@ -1,7 +1,8 @@
 package com.example.simplecrudproject.control;
-
+import com.example.simplecrudproject.dto.EmployeeDto;
 import com.example.simplecrudproject.model.Employee;
 import com.example.simplecrudproject.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,29 +16,29 @@ import java.util.List;
 public class EmployeeController {
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService  employeeService) {
         this.employeeService = employeeService;
     }
     @GetMapping
-    public List<Employee> getEmployees() {
+    public List<EmployeeDto> getEmployees() {
         return employeeService.getAllEmployees();
     }
     @GetMapping("/{id}")
 
-    public Employee getEmployee(@PathVariable Long id) {
+    public EmployeeDto getEmployee(@PathVariable @Valid Long id) {
         return  employeeService.getEmployeeById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
     }
     @GetMapping("/by-ids")
-    public List<Employee> getEmployeesByIDs(@RequestParam List<Long> ids) {
+    public List<EmployeeDto> getEmployeesByIDs(@RequestParam @Valid List<Long> ids) {
         return employeeService.getEmployeesByID(ids);
     }
 
     @PostMapping("/save")
-    public Employee createEmployee(@RequestBody Employee employee) {
+    public EmployeeDto createEmployee(@RequestBody @Valid EmployeeDto  employeeDto) {
 
   try{
-        return employeeService.createEmployee(employee);
+        return employeeService.createEmployee(employeeDto);
   }
     catch (Exception e){
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Employee Data");
@@ -46,7 +47,7 @@ public class EmployeeController {
 
     }
     @PostMapping("/save/list-employees")
-    public List<Employee> createEmployee(@RequestBody List<Employee> employees) {
+    public List<EmployeeDto> createEmployee(@RequestBody List<EmployeeDto> employees) {
 
         try {
             return employeeService.createEmployees(employees);
@@ -55,25 +56,26 @@ public class EmployeeController {
         }
     }
     @PutMapping("/edit")
-    public Employee updateEmployee(@RequestBody Employee employee) {
+    public EmployeeDto updateEmployee(@RequestBody @Valid EmployeeDto employee) {
 
         return employeeService.updateEmployee(employee);
 
     }
     @PutMapping("/edit/list-employees")
-    public List<Employee> updateEmployee(@RequestBody List<Employee> employees) {
+    public List<EmployeeDto> updateEmployee(@RequestBody @Valid List<EmployeeDto> employees) {
         return employeeService.updateEmployees(employees);
+
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteEmployee(@PathVariable @Valid Long id) {
       employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/by-ids")
-    public ResponseEntity<Void> deleteEmployees(@RequestParam  List<Long> ids) {
+    public ResponseEntity<Void> deleteEmployees(@RequestParam  @Valid List<Long> ids) {
         employeeService.deleteEmployees(ids);
         return ResponseEntity.noContent().build();
     }
@@ -85,7 +87,7 @@ public class EmployeeController {
     }
 
    @GetMapping("/employee/search-by-name")
-   public List<Employee> searchEmployees(@RequestParam String name) {
+   public List<EmployeeDto> searchEmployees(@RequestParam @Valid String name) {
          return employeeService.searchByName(name);
     }
 
