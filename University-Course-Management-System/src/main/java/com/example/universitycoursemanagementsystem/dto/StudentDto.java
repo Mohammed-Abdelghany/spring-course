@@ -1,6 +1,7 @@
 package com.example.universitycoursemanagementsystem.dto;
 
 import com.example.universitycoursemanagementsystem.model.Course;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class StudentDto {
 
     @Id
