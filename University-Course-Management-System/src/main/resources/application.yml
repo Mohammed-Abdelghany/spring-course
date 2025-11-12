@@ -1,0 +1,18 @@
+server:
+  port: 9090
+spring:
+  application:
+   name: University-Course-Management-System
+  datasource:
+   url: jdbc:oracle:thin:@//localhost:1521/orclpdb
+   driver:-class-name: oracle.jdbc.OracleDriver
+   username: hr
+   password: hr
+  jpa:
+    hibernate:
+     ddl-auto: update
+    show-sql: true
+
+
+
+
