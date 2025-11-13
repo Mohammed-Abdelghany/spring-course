@@ -16,12 +16,13 @@ public class HandelException {
     ResponseEntity<ExceptionResponse> handelException(Exception ex){
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ExceptionResponse(ex.getMessage()));
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<List<ExceptionResponse>> handelException(MethodArgumentNotValidException exception){
         List<ExceptionResponse> errors = exception.getFieldErrors().stream()
                 .map(err -> new ExceptionResponse(err.getDefaultMessage()))
                 .toList();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
 
 }
