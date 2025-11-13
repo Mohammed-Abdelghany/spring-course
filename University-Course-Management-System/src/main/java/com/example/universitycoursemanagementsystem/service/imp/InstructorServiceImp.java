@@ -2,7 +2,9 @@ package com.example.universitycoursemanagementsystem.service.imp;
 
 import com.example.universitycoursemanagementsystem.dto.InstructorDto;
 import com.example.universitycoursemanagementsystem.mapper.InstructorMapper;
+import com.example.universitycoursemanagementsystem.model.Course;
 import com.example.universitycoursemanagementsystem.model.Instructor;
+import com.example.universitycoursemanagementsystem.repo.CourseRepo;
 import com.example.universitycoursemanagementsystem.repo.InstructorRepo;
 import com.example.universitycoursemanagementsystem.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,13 @@ import java.util.Optional;
 public class InstructorServiceImp implements InstructorService {
     private final InstructorMapper instructorMapper;
     private  final InstructorRepo instructorRepo;
+    private final CourseRepo courseRepo;
+
     @Autowired
-    public InstructorServiceImp(InstructorMapper instructorMapper, InstructorRepo instructorRepo) {
+    public InstructorServiceImp(InstructorMapper instructorMapper, InstructorRepo instructorRepo, CourseRepo courseRepo) {
         this.instructorMapper = instructorMapper;
         this.instructorRepo  = instructorRepo;
+        this.courseRepo = courseRepo;
     }
 
     @Override
@@ -78,5 +83,20 @@ public class InstructorServiceImp implements InstructorService {
         }
         instructorRepo.deleteById(id);
 
+    }
+    @Override
+    public void assignCourseToInstructor(Long instructorId, Long courseId){
+        Instructor instructor= instructorRepo.findById(instructorId)
+                .orElseThrow(() -> new IllegalArgumentException("Instructor not found with ID: " + instructorId));
+         Course course= courseRepo.findById(courseId)
+                 .orElseThrow(() -> new IllegalArgumentException("Course not found with ID: " + courseId));
+        if (course.getInstructor() != null && !course.getInstructor().equals(instructor)) {
+            throw new IllegalStateException("Course is already assigned to another instructor.");
+        }
+         if (!instructor.getCourses().contains(course)) {
+                course.setInstructor(instructor);
+         instructor.getCourses().add(course);
+         }
+        instructorRepo.save(instructor);
     }
 }

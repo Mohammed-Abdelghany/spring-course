@@ -42,4 +42,10 @@ public class InstructorController {
     public void deleteInstructor(@PathVariable Long id) {
         instructorService.deleteInstructor(id);
     }
+    @PostMapping("/{instructorId}/courses/{courseId}")
+    public void assignCourseToInstructor(
+            @PathVariable Long instructorId,
+            @PathVariable Long courseId) {
+        instructorService.assignCourseToInstructor(instructorId, courseId);
+    }
 }

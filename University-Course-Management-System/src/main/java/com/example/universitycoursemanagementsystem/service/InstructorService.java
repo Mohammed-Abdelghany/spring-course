@@ -12,5 +12,6 @@ public interface InstructorService {
     public InstructorDto createInstructor(InstructorDto instructorDto);
     public InstructorDto updateInstructor(InstructorDto instructor);
     public void deleteInstructor(Long id);
+    public void assignCourseToInstructor(Long instructorId, Long courseId);
 
 }
