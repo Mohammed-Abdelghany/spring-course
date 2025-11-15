@@ -1,9 +1,6 @@
 package com.example.teacherstudents.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +15,8 @@ import java.util.List;
 @Entity
 public class Teacher {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     private Long id;
     @Column(nullable = false)
     private String name;

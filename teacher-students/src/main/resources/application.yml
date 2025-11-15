@@ -13,8 +13,10 @@ spring:
       ddl-auto: create
     show-sql: true
   messages:
-    basename: i8n/messages
+    basename: messages
     encoding: UTF-8
+
+
 
 
 

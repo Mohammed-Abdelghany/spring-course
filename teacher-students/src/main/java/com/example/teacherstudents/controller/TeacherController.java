@@ -2,6 +2,7 @@ package com.example.teacherstudents.controller;
 
 import com.example.teacherstudents.dto.TeacherDto;
 import com.example.teacherstudents.service.TeacherService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,22 +23,22 @@ public class TeacherController {
     }
 
     @GetMapping("/{id}")
-    public TeacherDto getTeacherById(@PathVariable Long id) {
+    public TeacherDto getTeacherById(@PathVariable @Valid Long id) {
         return teacherService.getTeacherById(id);
     }
 
     @PostMapping
-    public TeacherDto createTeacher(@RequestBody TeacherDto teacherDto) {
+    public TeacherDto createTeacher(@RequestBody @Valid TeacherDto teacherDto) {
         return teacherService.createTeacher(teacherDto);
     }
 
     @PutMapping
-    public TeacherDto updateTeacher(@RequestBody TeacherDto teacherDto) {
+    public TeacherDto updateTeacher(@RequestBody @Valid TeacherDto teacherDto) {
         return teacherService.updateTeacher(teacherDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTeacher(@PathVariable Long id) {
+    public void deleteTeacher(@PathVariable @Valid Long id) {
         teacherService.deleteTeacher(id);
     }
 

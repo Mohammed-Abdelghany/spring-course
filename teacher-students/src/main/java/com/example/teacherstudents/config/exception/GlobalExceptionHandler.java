@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.List;
 
 @ControllerAdvice
+
 public class GlobalExceptionHandler {
     private final BundleMessageService bundleMessageService;
     @Autowired
