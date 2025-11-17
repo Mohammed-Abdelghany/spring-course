@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TeacherServiceImp implements TeacherService {
@@ -65,8 +66,8 @@ public class TeacherServiceImp implements TeacherService {
             existingTeacher.setEmail(teacherDto.getEmail());
         }
 
-        if (teacherDto.getName() != null) {
-            existingTeacher.setName(teacherDto.getName());
+        if (teacherDto.getUsername() != null) {
+            existingTeacher.setUsername(teacherDto.getUsername());
         }
 
         if (teacherDto.getStudents() != null) {
@@ -96,5 +97,11 @@ public class TeacherServiceImp implements TeacherService {
         }
         teacherRepo.deleteById(id);
 
+    }
+
+    @Override
+    public Optional<TeacherDto> getTeacherByUserName(String username) {
+        TeacherDto teacherDto= teacherMapper.toTeacherDto(teacherRepo.findByUsername(username));
+        return Optional.ofNullable(teacherDto);
     }
 }
