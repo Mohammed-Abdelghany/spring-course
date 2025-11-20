@@ -20,6 +20,11 @@ spring:
     basename: messages
     encoding: UTF-8
 
+token:
+  secretKey: kld##wsadklwk%%#3#%)!@_!@#!@()$()!@#$!@#%@#@!#@!#
+  duration: 24h  # 1 day in milliseconds
+
+
 
 
 
