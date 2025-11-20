@@ -28,21 +28,23 @@ import java.util.stream.Collectors;
 public class JwtHandler {
     private JwtBuilder jwtBuilder;
     private JwtParser jwtParser;
-    private Duration expiration;
     private TeacherService teacherService;
+    private JwtToken jwtToken;
     @Autowired
 public JwtHandler(JwtToken jwtToken, TeacherService teacherService) {
 Key key= Keys.hmacShaKeyFor(jwtToken.getSecretKey().getBytes(StandardCharsets.UTF_8));
     jwtBuilder= Jwts.builder().signWith(key);
     jwtParser= Jwts.parserBuilder().setSigningKey(key).build();
     this.teacherService=teacherService;
+    this.jwtToken=jwtToken;
+
 
 }
 
 
     public String generateToken(TeacherDto  teacherDto) {
 Date now = new Date();
-Date ExpiryDate = Date.from(now.toInstant().plus(expiration));
+Date ExpiryDate = Date.from(now.toInstant().plus(jwtToken.getDuration()));
     return jwtBuilder
         .setSubject(teacherDto.getUsername())
         .setIssuedAt(now)

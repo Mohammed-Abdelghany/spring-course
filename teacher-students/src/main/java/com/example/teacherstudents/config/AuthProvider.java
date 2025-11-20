@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+//@Component
 public class AuthProvider implements AuthenticationProvider {
     private final TeacherService teacherService;
-    @Autowired
+//    @Autowired
    public AuthProvider(TeacherService teacherService) {
          this.teacherService = teacherService;
 
@@ -27,7 +27,6 @@ public class AuthProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 String username = authentication.getPrincipal().toString();
 String password = authentication.getCredentials().toString();
-
        Optional <TeacherDto> teacherDto = teacherService.getTeacherByUserName(username);
        if (teacherDto.isPresent()) {
               TeacherDto teacher = teacherDto.get();
