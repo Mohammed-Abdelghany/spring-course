@@ -1,0 +1,19 @@
+public class GlobalExceptionHandler {
+    private final BundleMessageService bundleMessageService;
+    @Autowired
+    public GlobalExceptionHandler(BundleMessageService bundleMessageService) {
+        this.bundleMessageService = bundleMessageService;
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<MessageResponse> handleException(Exception ex) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(bundleMessageService.getMessageResponse(ex.getMessage()));
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<List<MessageResponse>> handleException(MethodArgumentNotValidException exception) {
+        List<MessageResponse> errors = exception.getFieldErrors().stream().map(
+                err -> bundleMessageService.getMessageResponse(err.getDefaultMessage())
+        ).toList();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+
+
+    }

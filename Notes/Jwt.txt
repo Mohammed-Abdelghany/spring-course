@@ -1,0 +1,60 @@
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.5</version>
+</dependency>
+
+
+---------------------------------------------
+
+public JwtHandler(JwtToken jwtToken) {
+
+
+Key key= Keys.hmacShaKeyFor(jwtToken.getSecret().getBytes(StandardCharsets.UTF_8));
+    jwtBuilder= Jwts.builder().signWith(key);
+    jwtParser= Jwts.parserBuilder().setSigningKey(key).build();
+}
+
+
+   public String generateToken(TeacherDto  teacherDto) {
+Date now = new Date();
+Date ExpiryDate = Date.from(now.toInstant().plus(jwtToken.getDuration()));
+    return jwtBuilder
+        .setSubject(teacherDto.getUsername())
+        .setIssuedAt(now)
+        .setExpiration(ExpiryDate)
+        .claim("roles",teacherDto.getRoles().stream().map(RoleDto::getCode).toList())
+        .compact();
+    }
+
+
+    public TeacherDto validateToken(String token) {
+    if (!jwtParser.isSigned(token)) {
+        return null;
+    }
+Claims claims = jwtParser.parseClaimsJws(token).getBody();
+    String username = claims.getSubject();
+    Date issued =  claims.getIssuedAt();
+    Date exp =  claims.getExpiration();
+Optional<TeacherDto> teacherDto = teacherService.getTeacherByUserName(username);
+if (teacherDto.isPresent()) {
+boolean tokenValid = issued.before(new Date()) && exp.after(new Date());
+return tokenValid? teacherDto.get():null;
+}
+    return  null;
+    }
+
+
+
+
+------------------------------------------------------

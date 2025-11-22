@@ -1,0 +1,21 @@
+public class BundleMessageService {
+
+    private final MessageSource messageSource;
+
+    @Autowired
+    public BundleMessageService(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+    public String getMessageAr(String key) {
+        return messageSource.getMessage(key, null, new Locale("ar"));
+    }
+
+    public String getMessageEn(String key) {
+        return messageSource.getMessage(key, null, new Locale("en"));
+    }
+
+   public MessageResponse getMessageResponse(String key) {
+       return new MessageResponse(
+                getMessageAr(key),
+                getMessageEn(key)
+       );
