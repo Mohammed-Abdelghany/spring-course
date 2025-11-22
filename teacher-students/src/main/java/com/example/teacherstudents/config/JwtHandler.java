@@ -53,7 +53,6 @@ Date ExpiryDate = Date.from(now.toInstant().plus(jwtToken.getDuration()));
         .compact();
     }
 
-
     public TeacherDto validateToken(String token) {
     if (!jwtParser.isSigned(token)) {
         return null;
