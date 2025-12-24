@@ -1,0 +1,65 @@
+Auditing في Spring Boot
+ما هو Auditing؟
+Auditing هو نظام تتبع التغييرات التي تحدث على البيانات في قاعدة البيانات. يسجل معلومات مثل:
+
+من قام بإنشاء السجل؟ (Created By)
+متى تم إنشاؤه؟ (Created Date)
+من قام بآخر تعديل؟ (Modified By)
+متى تم آخر تعديل؟ (Modified Date)
+
+الفوائد من Auditing:
+
+التتبع والمساءلة: معرفة من قام بإضافة أو تعديل أي بيانات
+الأمان: تحديد المسؤول عن أي تغييرات غير مصرح بها
+التاريخ الكامل: الاحتفاظ بسجل زمني للتغييرات
+Compliance: الامتثال للمعايير القانونية والتنظيمية
+Debugging: تسهيل اكتشاف الأخطاء ومعرفة متى حدثت
+
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+@Configuration
+@EnableJpaAuditing
+public class JpaConfig {
+    @Bean
+    public AuditorAware<String> auditorProvider() {
+        return () -> Optional.of("النظام"); // أو استخدم SecurityContext للمستخدم الحالي
+    }
+}
+
+
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class Auditable {
+    
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+    
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+    
+    @LastModifiedBy
+    private String lastModifiedBy;
+    
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+    
+    // Getters and Setters
+}
+
+@Entity
+public class Product extends Auditable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    private Double price;
+    
+    // Constructors, Getters, Setters
+}

@@ -32,13 +32,11 @@ public class JwtHandler {
     private JwtToken jwtToken;
     @Autowired
 public JwtHandler(JwtToken jwtToken, TeacherService teacherService) {
-Key key= Keys.hmacShaKeyFor(jwtToken.getSecretKey().getBytes(StandardCharsets.UTF_8));
+    Key key= Keys.hmacShaKeyFor(jwtToken.getSecretKey().getBytes(StandardCharsets.UTF_8));
     jwtBuilder= Jwts.builder().signWith(key);
     jwtParser= Jwts.parserBuilder().setSigningKey(key).build();
     this.teacherService=teacherService;
     this.jwtToken=jwtToken;
-
-
 }
 
 

@@ -59,7 +59,7 @@ public AuthFilter(JwtHandler jwtHandler){
 
             filterChain.doFilter(request, response);
         } catch (IOException | ServletException e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         }
 
@@ -68,6 +68,6 @@ public AuthFilter(JwtHandler jwtHandler){
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
     String uri = request.getRequestURI();
-        return uri.contains("/auth") || uri.contains("/auth/register");
+        return uri.contains("/auth") ;
     }
 }
